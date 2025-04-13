@@ -5,17 +5,17 @@ import ProductPage from "../components/pages/ProductPage";
 export const links = [
   {
     link: "/",
-    title: "home",
+    title: "Home",
     el: <HomePage />,
   },
   {
-    link: "/form",
-    title: "form",
-    el: <AdminPage />,
+    link: "/product",
+    title: "Product",
+    el: <ProductPage />,
   },
   {
-    link: "/product",
-    title: "product",
-    el: <ProductPage />,
+    link: "/admin",
+    title: "Admin",
+    el: <AdminPage />,
   },
 ];

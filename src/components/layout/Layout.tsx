@@ -1,5 +1,7 @@
 import { FC, ReactNode } from "react";
 import scss from "./Layout.module.scss";
+import Header from "./header/Header";
+import Footer from "./footer/Footer";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -8,9 +10,9 @@ interface ILayoutProps {
 const Layout: FC<ILayoutProps> = ({ children }) => {
   return (
     <section className={scss.Layout}>
-      <div className="container">
-        <main>{children}</main>
-      </div>
+      <Header />
+      <main>{children}</main>
+      <Footer />
     </section>
   );
 };
