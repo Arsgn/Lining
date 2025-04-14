@@ -1,28 +1,23 @@
-import { FC, useEffect } from "react";
-import { useAuthStore } from "../../store/slices/UseAuthSlice";
+import { useEffect } from "react";
+import { useAuthStore } from "../../store/slices/AuthSlice";
 import Login from "../../authentication/Login";
-import scss from "./AdminPage.module.scss";
 
-const AdminPage: FC = () => {
+const SignPage = () => {
   const { user, loading, initAuth, logout } = useAuthStore();
 
   useEffect(() => {
     initAuth();
-  }, [initAuth]);
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <Login />;
 
   return (
-    <section className={scss.AdminPage}>
-      <div className="container">
-        <div className={scss.content}>
-          Welcome, {user.email}
-          <button onClick={logout}>Logout</button>
-        </div>
-      </div>
-    </section>
+    <div style={{ padding: "2rem" }}>
+      <h2>Welcome, {user.email}</h2>
+      <button onClick={logout}>Logout</button>
+    </div>
   );
 };
 
-export default AdminPage;
+export default SignPage;
