@@ -18,4 +18,9 @@ export const links = [
     title: "Admin",
     el: <AdminPage />,
   },
+  {
+    link: "/admin",
+    title: "Admin",
+    el: <AdminPage />,
+  },
 ];
