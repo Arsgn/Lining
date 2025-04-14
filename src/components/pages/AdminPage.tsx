@@ -1,4 +1,3 @@
-
 import { FC } from "react";
 import scss from "./AdminPage.module.scss";
 import { useForm } from "react-hook-form";
@@ -18,39 +17,43 @@ const ProductPage: FC = () => {
   const dispatch = useAppDispatch();
   const { handleSubmit, register, reset } = useForm<IForm>();
 
-  async function createData() {
+  const createData = async (formData: IForm) => {
     try {
-      let { data } = await axios.get(API);
-      dispatch(addData(data));
-      reset();
-    } catch (error) {}
-  }
+      // Отправляем данные на сервер
+      const response = await axios.post(API, formData);
 
-  const 
+      // Добавляем в store
+      dispatch(addData(response.data)); // проверь, что приходит от API
+
+      reset();
+    } catch (error) {
+      console.error("Ошибка при создании товара", error);
+    }
+  };
 
   return (
     <section className={scss.AdminPage}>
       <div className="container">
         <div className={scss.content}>
           <div className="inputs">
-            <form onSubmit={() => handleSubmit(createData)} action="">
+            <form onSubmit={handleSubmit(createData)}>
               <input
-                {...(register("image"), { required: true })}
+                {...register("image", { required: true })}
                 type="text"
                 placeholder="image"
               />
               <input
-                {...(register("name"), { required: true })}
+                {...register("name", { required: true })}
                 type="text"
                 placeholder="name"
               />
               <input
-                {...(register("price"), { required: true })}
-                type="text"
+                {...register("price", { required: true })}
+                type="number"
                 placeholder="price"
               />
               <input
-                {...(register("description"), { required: true })}
+                {...register("description", { required: true })}
                 type="text"
                 placeholder="description"
               />

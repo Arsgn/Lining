@@ -1,31 +1,35 @@
-import axios from "axios";
 import { useAppSelector } from "../../../store/Store";
 import scss from "./ListProduct.module.scss";
-interface Idata {
+
+interface IData {
   image: string;
   name: string;
   price: number;
   description: string;
 }
 const ListProduct = () => {
-  const API = import.meta.env.VITE_API;
-
   const { data } = useAppSelector((s) => s.data);
-
- 
 
   return (
     <div id={scss.ListProduct}>
       <div className="container">
         <div className={scss.content}>
-          {data.map((item, ind) => (
-            <div key={ind}>
-            
-            </div>
-          ))}
+          {data.length > 0 ? (
+            data.map((item, ind) => (
+              <div className={scss.card} key={ind}>
+                <img src={item.image} alt={item.name} />
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                <span>{item.price}₸</span>
+              </div>
+            ))
+          ) : (
+            <p>Нет товаров</p>
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 export default ListProduct;
