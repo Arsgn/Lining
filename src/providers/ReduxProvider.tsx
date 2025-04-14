@@ -1,14 +1,12 @@
-import { FC } from "react";
-import scss from "./ReduxProvider.module.scss";
+import React, { FC } from "react";
+import { Provider } from "react-redux";
+import store from "../store/Store";
+interface IChildProps {
+  children: React.ReactNode;
+}
 
-const ReduxProvider: FC = () => {
-  return (
-    <section className={scss.ReduxProvider}>
-      <div className="container">
-        <div className={scss.content}>ReduxProvider</div>
-      </div>
-    </section>
-  );
+const ReduxProvider: FC<IChildProps> = ({ children }) => {
+  return <Provider store={store}>{children}</Provider>;
 };
 
 export default ReduxProvider;

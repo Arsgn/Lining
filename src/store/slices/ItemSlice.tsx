@@ -1,14 +1,20 @@
-import { FC } from "react";
-import scss from "./ItemSlice.module.scss";
+import { createSlice } from "@reduxjs/toolkit";
 
-const ItemSlice: FC = () => {
-  return (
-    <section className={scss.ItemSlice}>
-      <div className="container">
-        <div className={scss.content}>ItemSlice</div>
-      </div>
-    </section>
-  );
+interface IData {
+  data: {}[];
+}
+const initialState: IData = {
+  data: [],
 };
+const lining = createSlice({
+  name: "lining",
+  initialState,
+  reducers: {
+    addData: (state, action) => {
+      state.data.push(action.payload);
+    },
+  },
+});
 
-export default ItemSlice;
+export const { addData } = lining.actions;
+export default lining.reducer;
