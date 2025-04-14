@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IData {
-  data: {}[];
+  data: {
+    createdAt: string;
+    description: string;
+    image: string;
+    name: string;
+    price: string;
+    updatedAt: string;
+    _id: number;
+  }[];
 }
 const initialState: IData = {
   data: [],
@@ -11,7 +19,7 @@ const lining = createSlice({
   initialState,
   reducers: {
     addData: (state, action) => {
-      state.data.push(action.payload);
+      state.data = action.payload;
     },
   },
 });

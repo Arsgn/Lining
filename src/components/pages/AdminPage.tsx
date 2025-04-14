@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import scss from "./AdminPage.module.scss";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { addData } from "../../store/slices/ItemSlice";
 import { useAppDispatch } from "../../store/Store";
@@ -12,25 +12,37 @@ interface IForm {
   description: string;
 }
 
-const ProductPage: FC = () => {
+const AdminPage: FC = () => {
   const API = import.meta.env.VITE_API;
   const dispatch = useAppDispatch();
   const { handleSubmit, register, reset } = useForm<IForm>();
 
-  const createData = async (formData: IForm) => {
+  async function readData() {
     try {
-      // Отправляем данные на сервер
-      const response = await axios.post(API, formData);
+      const { data } = await axios.get(API);
+      dispatch(addData(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-      // Добавляем в store
-      dispatch(addData(response.data)); // проверь, что приходит от API
-
+  const createData: SubmitHandler<IForm> = async (data) => {
+    const newData: IForm = {
+      image: data.image,
+      name: data.name,
+      price: data.price,
+      description: data.description,
+    };
+    try {
+      await axios.post(API, newData);
       reset();
-    } catch (error) {
-      console.error("Ошибка при создании товара", error);
+    } catch (err) {
+      console.log(err);
     }
   };
-
+  useEffect(() => {
+    readData();
+  }, []);
   return (
     <section className={scss.AdminPage}>
       <div className="container">
@@ -66,4 +78,4 @@ const ProductPage: FC = () => {
   );
 };
 
-export default ProductPage;
+export default AdminPage;

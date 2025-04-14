@@ -1,13 +1,12 @@
 import { FC } from "react";
 import scss from "./HomePage.module.scss";
+import ListProduct from "../layout/products/ListProduct";
 
 const ProductPage: FC = () => {
   return (
-    <section className={scss.HomePage}>
-      <div className="container">
-        <div className={scss.content}>HomePage</div>
-      </div>
-    </section>
+    <>
+      <ListProduct />
+    </>
   );
 };
 

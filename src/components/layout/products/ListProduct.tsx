@@ -1,35 +1,57 @@
-import { useAppSelector } from "../../../store/Store";
+import axios from "axios";
+import { addData } from "../../../store/slices/ItemSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/Store";
 import scss from "./ListProduct.module.scss";
+import { useEffect } from "react";
 
-interface IData {
-  image: string;
-  name: string;
-  price: number;
-  description: string;
-}
 const ListProduct = () => {
+  const API = import.meta.env.VITE_API;
+  const dispatch = useAppDispatch();
   const { data } = useAppSelector((s) => s.data);
+  console.log(data, "data");
 
+  async function readData() {
+    try {
+      const { data } = await axios.get(API);
+      dispatch(addData(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async function deleteData(id: number) {
+    try {
+      let { data } = await axios.delete(`${API}/${id}`);
+      readData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    readData();
+  }, []);
   return (
     <div id={scss.ListProduct}>
       <div className="container">
         <div className={scss.content}>
-          {data.length > 0 ? (
-            data.map((item, ind) => (
-              <div className={scss.card} key={ind}>
+          <div  className={scss.blocks}>
+            {data.map((item, index) => (
+              <div className={scss.block} key={index}>
                 <img src={item.image} alt={item.name} />
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <span>{item.price}₸</span>
+                <div className={scss.texts}>
+                  <h1>{item.name}</h1>
+                  <p>{item.price}$</p>
+                </div>
+                <button>Add</button>
+                <div className={scss.btns}>
+                  <button onClick={() => deleteData(item._id)}>delete</button>
+                  <button>edit</button>
+                </div>
               </div>
-            ))
-          ) : (
-            <p>Нет товаров</p>
-          )}
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default ListProduct;
