@@ -1,11 +1,33 @@
 #ListProduct {
   padding-block: 70px;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  .prodHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  input {
+    padding: 7px 20px;
+    border: 1.5px solid rgba(47, 46, 46, 0.66);
+    border-radius: 5px;
+  }
+}
+.filter {
+  display: flex;
+  gap: 10px;
+}
 .blocks {
   display: flex;
   flex-wrap: wrap;
-
-  justify-content: center;
+  justify-content: space-between;
   gap: 40px;
 
   .block {
@@ -13,7 +35,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 15px;
-    width: 350px;
+    width: 290px;
     max-width: 400px;
     color: black;
     border-radius: 10px;
