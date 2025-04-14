@@ -1,13 +1,16 @@
 import axios from "axios";
-import { addData } from "../../../store/slices/ItemSlice";
+import { addData, searchData } from "../../../store/slices/ItemSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/Store";
+
 import scss from "./ListProduct.module.scss";
 import { useEffect } from "react";
 
 const ListProduct = () => {
   const API = import.meta.env.VITE_API;
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((s) => s.data);
+
+  const { data, search } = useAppSelector((s) => s.data);
+
   console.log(data, "data");
 
   async function readData() {
@@ -20,12 +23,21 @@ const ListProduct = () => {
   }
   async function deleteData(id: number) {
     try {
-      let { data } = await axios.delete(`${API}/${id}`);
+      await axios.delete(`${API}/${id}`);
       readData();
     } catch (error) {
       console.log(error);
     }
   }
+
+  //------search>
+  function handleSearch(formData: string) {
+    let result = data.filter((item) =>
+      item.name.toLowerCase().includes(formData.toLowerCase())
+    );
+    dispatch(searchData(result));
+  }
+  //>>>>>>>>>>>>>
   useEffect(() => {
     readData();
   }, []);
@@ -33,8 +45,35 @@ const ListProduct = () => {
     <div id={scss.ListProduct}>
       <div className="container">
         <div className={scss.content}>
-          <div  className={scss.blocks}>
-            {data.map((item, index) => (
+          <div className={scss.prodHeader}>
+            <div className={scss.filter}>
+              <p>
+                <input type="radio" /> foots
+              </p>
+              <p>
+                <input type="radio" /> clothes
+              </p>
+              <p>
+                <input type="radio" /> t-shirt
+              </p>
+            </div>
+            <div className={scss.search}>
+              <input
+                name="input"
+                type="search"
+                placeholder="Search"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+
+              <label className={scss.labelforsearch} htmlFor="input">
+                <svg className="searchIcon" viewBox="0 0 512 512">
+                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+                </svg>
+              </label>
+            </div>
+          </div>
+          <div className={scss.blocks}>
+            {search.map((item, index) => (
               <div className={scss.block} key={index}>
                 <img src={item.image} alt={item.name} />
                 <div className={scss.texts}>
