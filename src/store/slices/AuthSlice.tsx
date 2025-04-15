@@ -9,7 +9,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string) => Promise<void>;
   logout: () => void;
   initAuth: () => void;
 }
@@ -19,12 +19,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   loading: false,
   error: null,
 
-  login: async (email, password) => {
+  register: async (email, password) => {
     set({ loading: true, error: null });
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (email === "admin@example.com" && password === "1234") {
+      if (email === "arsenkonurbaev122@gmail.com" && password === "1234") {
         const user = {
           email,
           token: "mock-token-123",

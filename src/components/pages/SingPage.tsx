@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/slices/AuthSlice";
-import Login from "../../authentication/Login";
+import Register from "../../authentication/register/Register";
 
 const SignPage = () => {
   const { user, loading, initAuth, logout } = useAuthStore();
@@ -10,7 +10,7 @@ const SignPage = () => {
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (!user) return <Login />;
+  if (!user) return <Register />;
 
   return (
     <div style={{ padding: "2rem" }}>
