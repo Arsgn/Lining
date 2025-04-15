@@ -47,7 +47,7 @@ const AdminPage: FC = () => {
     <section className={scss.AdminPage}>
       <div className="container">
         <div className={scss.content}>
-          <div className="inputs">
+        <div className={scss.input}>
             <form onSubmit={handleSubmit(createData)}>
               <input
                 {...register("image", { required: true })}
